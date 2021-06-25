@@ -1,16 +1,17 @@
- import { UserRepositories } from "../repositories/UserRepositories"
+ import { getCustomRepository } from "typeorm";
+import { UsersRepositories } from "../repositories/UsersRepositories"
 
 interface IUserRequest {
 	name: string,
 	email: string,
-	admin: boolean
+	admin?: boolean
 }
 
 
 class CreateUserService {
 
-	async execute({ name, email, admin} : IUserRequest) {
-		const usersRepository = new UserRepositories();
+	async execute({ name, email, admin}: IUserRequest) {
+		const usersRepository = getCustomRepository(UsersRepositories);
 
 		if(!email) {
 			throw new Error("Email incorreto!")
